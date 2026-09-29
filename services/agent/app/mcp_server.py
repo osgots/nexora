@@ -1,16 +1,16 @@
 """Alexa+ compatible Nexora MCP surface.
 
 The official MCP Python SDK v2 serves Streamable HTTP and supports both the
-2025-11-25 and 2026-07-28 protocol revisions, satisfying the hackathon's
-minimum MCP revision requirement.
+2025-11-25 legacy handshake and the 2026-07-28 protocol revision, satisfying
+the hackathon's minimum MCP revision requirement.
 """
-from mcp.server.fastmcp import FastMCP
+from mcp.server import MCPServer
+
 from .study_engine import build_plan, extract_topics, grade_short_answer, update_mastery
 
-mcp = FastMCP(
+mcp = MCPServer(
     "Nexora Learning MCP",
     instructions="Adaptive learning tools for planning, mastery repair, recall and replanning.",
-    json_response=True,
 )
 
 
@@ -39,4 +39,10 @@ def update_learner_mastery(previous_mastery: int, score_percent: int, confidence
 
 
 if __name__ == "__main__":
-    mcp.run(transport="streamable-http")
+    mcp.run(
+        transport="streamable-http",
+        host="127.0.0.1",
+        port=8000,
+        streamable_http_path="/mcp",
+        json_response=True,
+    )
