@@ -91,6 +91,18 @@ For AgentCore deployment, `services/agent/app/agentcore_runtime.py` exposes a `B
 3. AgentCore Memory with semantic + summarization + preference strategies
 4. Web simulator on Vercel
 
+The deployable AgentCore project is checked in under `agentcore/`. With AWS
+credentials configured, validate and deploy it from the repository root:
+
+```bash
+agentcore validate
+agentcore package --runtime NexoraAgent
+agentcore deploy --yes
+```
+
+See [`docs/AWS_SETUP.md`](docs/AWS_SETUP.md) for the verified CLI flow and the
+post-deployment memory-ID step.
+
 ## Tests
 
 ```bash

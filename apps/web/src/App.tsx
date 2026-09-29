@@ -62,6 +62,7 @@ export default function App() {
   const [toast, setToast] = useState('')
   const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null)
   const [trace, setTrace] = useState<string[]>(['memory.lookup', 'mastery.rank', 'plan.select'])
+  const [runtimeMode, setRuntimeMode] = useState<'demo' | 'aws'>('demo')
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -151,9 +152,11 @@ export default function App() {
 
       try {
         const { reply, mode } = await sendMessage(value)
+        setRuntimeMode(mode)
         setTrace((current) => [...current, mode === 'aws' ? 'bedrock.respond' : 'demo.respond'])
         appendAssistant(reply)
       } catch {
+        setRuntimeMode('demo')
         await new Promise((resolve) => setTimeout(resolve, 420))
         appendAssistant(demoReply(value))
       }
@@ -200,8 +203,8 @@ export default function App() {
           <button className="nav-item"><span>▦</span> Insights</button>
         </nav>
         <div className="sidebar-foot">
-          <div className="status-dot" /> Agent online
-          <small>Alexa+ × Bedrock × AgentCore</small>
+          <div className={`status-dot ${runtimeMode}`} /> {runtimeMode === 'aws' ? 'AWS agent online' : 'Resilient demo online'}
+          <small>{runtimeMode === 'aws' ? 'Bedrock × AgentCore live' : 'Cloud-ready deterministic fallback'}</small>
         </div>
       </aside>
 
@@ -212,6 +215,7 @@ export default function App() {
             <h1>Good evening, Shivam.</h1>
           </div>
           <div className="top-actions">
+            <span className={`pill runtime-pill ${runtimeMode}`}>{runtimeMode === 'aws' ? 'Bedrock live' : 'Demo mode'}</span>
             <span className="pill">Exam mode</span>
             <button className="avatar" aria-label="Profile">SY</button>
           </div>

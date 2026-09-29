@@ -157,6 +157,17 @@ ENV/
 env.bak/
 venv.bak/
 
+# JavaScript build output
+node_modules/
+dist/
+*.tsbuildinfo
+
+# AgentCore local state and secrets
+agentcore/.cli/
+agentcore/.env.local
+agentcore/*.zip
+agentcore/*/staging/
+
 # Spyder project settings
 .spyderproject
 .spyproject

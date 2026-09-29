@@ -15,53 +15,55 @@ Verify identity before provisioning anything:
 aws sts get-caller-identity
 ```
 
-## 1. Install the AgentCore CLI
+## 1. Install the current AgentCore CLI
 
 ```bash
 npm install -g @aws/agentcore
 agentcore --version
 ```
 
-## 2. Create an AgentCore project around the existing Nexora agent
+Nexora was validated with AgentCore CLI `0.30.0`. The older Python
+`bedrock-agentcore-starter-toolkit` CLI is not used.
 
-From a workspace directory next to the repository:
+## 2. Validate the checked-in AgentCore project
 
-```bash
-agentcore create --project-name Nexora --no-agent
-cd Nexora
-agentcore add agent \
-  --name NexoraAgent \
-  --type byo \
-  --code-location ../nexora/services/agent \
-  --entrypoint app/agentcore_runtime.py \
-  --language Python \
-  --framework Strands \
-  --model-provider Bedrock \
-  --memory none \
-  --build CodeZip
-```
+The repository already contains a schema-valid CodeZip project in
+`agentcore/agentcore.json` with:
 
-If the installed CLI prompts interactively for a value that has changed since this document was written, keep the same intent: BYO Python agent, Strands framework, Bedrock provider, CodeZip build.
+- the existing Strands runtime at `services/agent/app/agentcore_runtime.py`
+- AWS IAM inbound authorization
+- Claude Sonnet 4.6 through Amazon Bedrock
+- semantic, summarization and user-preference memory strategies
 
-## 3. Add AgentCore Memory
+From the repository root:
 
 ```bash
-agentcore add memory \
-  --name NexoraLearningMemory \
-  --strategies SEMANTIC,SUMMARIZATION,USER_PREFERENCE
-agentcore deploy
+agentcore validate
+agentcore package --runtime NexoraAgent
 ```
 
-After provisioning, note the memory resource ID and expose it to the agent as:
+The first command must report `Valid`. Packaging verifies the deployable Python
+artifact without creating AWS resources.
+
+## 3. Deploy Runtime and Memory
 
 ```bash
-export AGENTCORE_MEMORY_ID=<memory-id>
-export AWS_REGION=us-east-1
-export NEXORA_AWS_ENABLED=true
-export NEXORA_MODEL_ID=global.anthropic.claude-sonnet-4-6
+agentcore deploy --yes
+agentcore status
 ```
 
-The integration code already uses `AgentCoreMemorySessionManager` when `AGENTCORE_MEMORY_ID` is present.
+The first deployment bootstraps CDK, creates the Runtime, configures CloudWatch,
+and provisions `NexoraLearningMemory`. Record the deployed memory ID, add it to
+the runtime's `envVars` as `AGENTCORE_MEMORY_ID`, then deploy the updated
+configuration once more:
+
+```bash
+agentcore deploy --yes
+```
+
+`NEXORA_AWS_ENABLED`, `AWS_REGION`, and `NEXORA_MODEL_ID` are already set in the
+checked-in runtime configuration. The application uses
+`AgentCoreMemorySessionManager` only when the deployed memory ID is present.
 
 ## 4. Test the agent
 
@@ -69,7 +71,9 @@ The integration code already uses `AgentCoreMemorySessionManager` when `AGENTCOR
 agentcore invoke "My exam is Friday and I have 90 minutes. Build the best study plan."
 ```
 
-Then invoke again with the same learner/session identity and verify that cross-session context is retained.
+Then invoke again with the same learner/session identity and verify that
+cross-session context is retained. Capture `agentcore logs` and
+`agentcore traces list` as factual Devpost evidence.
 
 ## 5. MCP runtime path
 

@@ -12,6 +12,8 @@ Official deadline: **October 23, 2026 at 12:00 PM PDT**. Target Nexora final sub
 - [x] Strands/Bedrock agent path
 - [x] AgentCore Memory integration code
 - [x] AgentCore Runtime entry point
+- [x] AgentCore CLI project configuration
+- [x] AgentCore Runtime CodeZip validates and packages locally
 - [x] deterministic fallback and tests
 - [x] responsive product UI
 - [x] adaptive quiz → mastery update → plan rebuild in simulator
@@ -32,6 +34,7 @@ Official deadline: **October 23, 2026 at 12:00 PM PDT**. Target Nexora final sub
 - [ ] prove memory continuity with the same user/session identity
 - [ ] run the MCP server and capture MCP Inspector evidence
 - [ ] record real setup friction in `FRICTION_LOG.md`
+- [ ] replace pending fields in `DEPLOYMENT_EVIDENCE.md` with reproducible evidence
 
 ## Optional hosting
 
