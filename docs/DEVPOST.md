@@ -46,12 +46,12 @@ A second challenge was keeping claims reproducible. The repository separates cod
 - green CI for the web production build and Python agent tests
 
 ## Open Source mini-challenge
-Alongside Nexora, we created **Adaptive Learning MCP**, a standalone reusable toolkit on a dedicated contribution branch.
+Alongside Nexora, we created and merged **Adaptive Learning MCP**, a standalone reusable toolkit for other learning-agent developers.
 
-- **Contribution URL:** https://github.com/osgots/nexora/pull/1
+- **Merged contribution:** https://github.com/osgots/nexora/pull/1
 - **Project repository:** https://github.com/osgots/nexora
 - **GitHub username:** `osgots`
-- **Contribution branch:** `open-source/adaptive-learning-mcp`
+- **Package path:** `opensource/adaptive-learning-mcp`
 
 Adaptive Learning MCP exposes deterministic topic prioritization, active-recall grading and mastery updates through a Streamable HTTP MCP server. It includes standalone package metadata, tests and a documented agent-loop integration pattern. The goal is to let other learning-agent developers keep learner-state decisions testable instead of burying them inside prompts.
 
