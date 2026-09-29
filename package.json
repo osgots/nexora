@@ -1,0 +1,10 @@
+{
+  "name": "nexora",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/web"],
+  "scripts": {
+    "dev": "npm --workspace @nexora/web run dev",
+    "build": "npm --workspace @nexora/web run build"
+  }
+}
