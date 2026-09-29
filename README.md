@@ -129,6 +129,7 @@ This repository is public and MIT licensed, and all hackathon work is captured i
 - [`docs/FRICTION_LOG.md`](docs/FRICTION_LOG.md) — bonus-ready friction log template
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — technical architecture
 - [`docs/DEPLOYMENT_EVIDENCE.md`](docs/DEPLOYMENT_EVIDENCE.md) — verified deployment and test evidence
+- [`docs/AWS_GITHUB_OIDC.md`](docs/AWS_GITHUB_OIDC.md) — keyless AgentCore deployment setup
 
 ## License
 

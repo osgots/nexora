@@ -1,0 +1,74 @@
+name: Deploy Nexora to AgentCore
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: nexora-agentcore-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy AgentCore Runtime and Memory
+    runs-on: ubuntu-latest
+    environment: aws-agentcore
+    env:
+      AWS_REGION: us-east-1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Configure short-lived AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          role-session-name: nexora-agentcore-github
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Verify AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Install AgentCore CLI
+        run: npm install --global @aws/agentcore@0.30.0
+
+      - name: Validate AgentCore project
+        run: agentcore validate
+
+      - name: Package Nexora runtime
+        run: agentcore package --runtime NexoraAgent
+
+      - name: Deploy Runtime and Memory
+        shell: bash
+        run: |
+          set -euo pipefail
+          agentcore deploy --target default --yes --json | tee agentcore-deploy.json
+
+      - name: Capture deployed resource status
+        if: always()
+        shell: bash
+        run: |
+          set -o pipefail
+          agentcore status --target default --json | tee agentcore-status.json
+
+      - name: Upload deployment evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexora-agentcore-deployment
+          if-no-files-found: warn
+          path: |
+            agentcore-deploy.json
+            agentcore-status.json
+            agentcore/aws-targets.json
+          retention-days: 30
