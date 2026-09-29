@@ -36,3 +36,25 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: pytest -q
       - run: python -m py_compile app/*.py
+      - name: Import MCP and AgentCore runtime surfaces
+        run: python -c "from app.mcp_server import mcp; import app.agentcore_runtime; print('Nexora runtime imports OK')"
+
+  open-source:
+    name: Adaptive Learning MCP tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Test toolkit when present on contribution branch
+        shell: bash
+        run: |
+          if [ -d "opensource/adaptive-learning-mcp" ]; then
+            python -m pip install --upgrade pip
+            pip install -e "opensource/adaptive-learning-mcp[dev]"
+            pytest -q opensource/adaptive-learning-mcp/tests
+            python -c "from adaptive_learning_mcp.server import mcp; print('Adaptive Learning MCP import OK')"
+          else
+            echo "Toolkit lives on the dedicated Open Source contribution branch; skipping on main."
+          fi
