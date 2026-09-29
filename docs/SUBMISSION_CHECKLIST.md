@@ -40,11 +40,12 @@ Official deadline: **October 23, 2026 at 12:00 PM PDT**. Target Nexora final sub
 
 Hosting is useful for judges and the demo, but the Alexa+ FAQ says a locally runnable public repo plus the video is sufficient. If hosting:
 
-- [ ] connect/import `osgots/nexora` in Vercel
-- [ ] deploy the frontend (`npm run build`, output `apps/web/dist`)
+- [x] connect/import `osgots/nexora` in Vercel
+- [x] deploy the frontend (`npm run build`, output `apps/web/dist`)
 - [ ] if a hosted API is used, set `VITE_API_URL`
 - [ ] set CORS only for the final frontend origin
-- [ ] verify desktop and mobile layouts
+- [x] verify the live desktop layout and adaptive quiz flow
+- [ ] verify the mobile layout
 
 ## Demo video
 

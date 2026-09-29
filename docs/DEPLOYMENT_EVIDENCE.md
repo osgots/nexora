@@ -14,11 +14,17 @@ This file separates completed verification from evidence that must come from the
 
 ## Frontend deployment
 
-- Public URL: **pending authenticated Vercel deployment**
-- Git commit: **pending**
-- Desktop verification: **pending**
+- Public URL: https://nexora-eta-ten.vercel.app/
+- Initial deployment commit: `c84396262b09ab80969dbbb04241e813c38ef0c3`
+- Desktop verification: **passed in the live Vercel deployment**
 - Mobile verification: **pending**
-- Browser console check: **pending**
+- Browser console check: **passed; no application-origin warnings or errors**
+- Adaptive-loop verification: **passed**
+  - generated a quiz for the lowest-mastery topic
+  - graded a concept-complete answer at 100%
+  - moved Booth algorithm mastery from 52% to 63%
+  - moved readiness from 68% to 71%
+  - rebuilt the plan with Cache mapping as the next action
 
 ## AWS deployment
 

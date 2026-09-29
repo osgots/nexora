@@ -4,6 +4,8 @@
 
 Nexora is an agentic learning system built for the **Build, Ship, Shape: Amazon Developer Hackathon**. It converts a learner's syllabus, available time, mastery state and recent answers into the next best learning action — then updates that state and replans after every interaction.
 
+**Live demo:** https://nexora-eta-ten.vercel.app/
+
 Unlike a single-turn study chatbot, Nexora is designed around a closed loop:
 
 **understand → prioritize → teach → test → remember → replan**
@@ -126,6 +128,7 @@ This repository is public and MIT licensed, and all hackathon work is captured i
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — <3 minute demo script
 - [`docs/FRICTION_LOG.md`](docs/FRICTION_LOG.md) — bonus-ready friction log template
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — technical architecture
+- [`docs/DEPLOYMENT_EVIDENCE.md`](docs/DEPLOYMENT_EVIDENCE.md) — verified deployment and test evidence
 
 ## License
 
