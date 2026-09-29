@@ -1,18 +1,17 @@
 from __future__ import annotations
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server import MCPServer
 
 from .core import grade_recall as _grade_recall
 from .core import rank_learning_actions as _rank_learning_actions
 from .core import update_mastery as _update_mastery
 
-mcp = FastMCP(
+mcp = MCPServer(
     "Adaptive Learning MCP",
     instructions=(
         "Deterministic learning-state tools for agents. Rank the next learning action, "
         "grade active recall, then update mastery from the observed result."
     ),
-    json_response=True,
 )
 
 
@@ -35,7 +34,13 @@ def update_mastery(previous: int, observed_score: int, confidence: int = 5) -> i
 
 
 def main() -> None:
-    mcp.run(transport="streamable-http")
+    mcp.run(
+        transport="streamable-http",
+        host="127.0.0.1",
+        port=8000,
+        streamable_http_path="/mcp",
+        json_response=True,
+    )
 
 
 if __name__ == "__main__":
