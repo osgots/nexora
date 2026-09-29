@@ -2,6 +2,12 @@ name: Deploy Nexora to AgentCore
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/deploy-agentcore.yml'
+      - 'agentcore/**'
+      - 'services/agent/**'
 
 permissions:
   contents: read
@@ -13,6 +19,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: ${{ vars.AWS_ROLE_ARN != '' }}
     name: Deploy AgentCore Runtime and Memory
     runs-on: ubuntu-latest
     environment: aws-agentcore
