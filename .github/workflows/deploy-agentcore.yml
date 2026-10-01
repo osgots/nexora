@@ -19,9 +19,10 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ vars.AWS_ROLE_ARN != '' }}
+    if: ${{ github.ref == 'refs/heads/main' && vars.AWS_ROLE_ARN != '' && vars.AWS_DEPLOY_ENABLED == 'true' }}
     name: Deploy AgentCore Runtime and Memory
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     environment: aws-agentcore
     env:
       AWS_REGION: us-east-1
@@ -37,6 +38,7 @@ jobs:
           python-version: '3.13'
 
       - name: Configure short-lived AWS credentials
+        id: credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_ROLE_ARN }}
@@ -45,6 +47,22 @@ jobs:
 
       - name: Verify AWS identity
         run: aws sts get-caller-identity
+
+      - name: Configure the authenticated deployment target
+        env:
+          NEXORA_DEPLOY_ACCOUNT: ${{ steps.credentials.outputs.aws-account-id }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
+          account = os.environ['NEXORA_DEPLOY_ACCOUNT']
+          if not re.fullmatch(r'[0-9]{12}', account):
+              raise SystemExit('AWS identity did not return a valid account ID')
+          target = {'name': 'default', 'account': account, 'region': os.environ['AWS_REGION']}
+          Path('agentcore/aws-targets.json').write_text(json.dumps([target], indent=2) + '\n')
+          PY
 
       - name: Install AgentCore CLI
         run: npm install --global @aws/agentcore@0.30.0

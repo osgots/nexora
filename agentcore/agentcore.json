@@ -11,7 +11,7 @@
     {
       "name": "NexoraAgent",
       "build": "CodeZip",
-      "entrypoint": "app/agentcore_runtime.py",
+      "entrypoint": "runtime.py",
       "codeLocation": "services/agent/",
       "runtimeVersion": "PYTHON_3_13",
       "envVars": [

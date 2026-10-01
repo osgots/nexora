@@ -30,7 +30,7 @@ Nexora was validated with AgentCore CLI `0.30.0`. The older Python
 The repository already contains a schema-valid CodeZip project in
 `agentcore/agentcore.json` with:
 
-- the existing Strands runtime at `services/agent/app/agentcore_runtime.py`
+- executable `services/agent/runtime.py`, which imports the Strands runtime from `app.agentcore_runtime`
 - AWS IAM inbound authorization
 - Claude Sonnet 4.6 through Amazon Bedrock
 - semantic, summarization and user-preference memory strategies

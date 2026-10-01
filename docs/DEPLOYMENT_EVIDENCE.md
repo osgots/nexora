@@ -7,8 +7,10 @@ This file separates completed verification from evidence that must come from the
 - [x] frontend production build: `npm run build`
 - [x] Python agent and MCP tests: `7 passed`
 - [x] AgentCore runtime import smoke test
+- [x] executable `runtime.py` starts successfully, `/ping` returns 200, and `/invocations` returns a valid demo response (October 1)
 - [x] FastAPI `/health`, `/api/chat`, and `/api/plan` responses
 - [x] AgentCore project schema: `agentcore validate`
+- [x] CDK infrastructure TypeScript build: `npm run build` in `agentcore/cdk` (October 1)
 - [x] Python 3.13 ARM64 CodeZip package: `agentcore package --runtime NexoraAgent`
 - [x] deterministic demo fallback when private AWS credentials are unavailable
 
@@ -27,6 +29,8 @@ This file separates completed verification from evidence that must come from the
   - rebuilt the plan with Cache mapping as the next action
 
 ## AWS deployment
+
+October 1 checkpoint: AWS Console still returns "Site Unavailable" in the cloud browser. No live AWS deployment or model invocation is claimed. Before deployment, authorize the dedicated GitHub OIDC role and set `AWS_DEPLOY_ENABLED=true` after confirming usage costs or credits. The workflow now derives its target account from the authenticated identity. CDK stack source is included in Git and OIDC trust is restricted to the `aws-agentcore` environment.
 
 - AWS account/region: **pending owner authentication**
 - AgentCore Runtime ARN: **pending**
