@@ -1,110 +1,14 @@
-# Product Feedback — Evidence-First Draft
+# Tool and platform feedback — October 3, 2026
 
-The hackathon requires feedback for every tool, API or SDK used. Fill this only from actual hands-on use; do not turn planned architecture into claimed experience.
+| Tool | Actual use and result | Limitations / next evaluation |
+|---|---|---|
+| React, TypeScript, Vite | Browser learning simulation, local state, navigation and responsive layouts; production build and deterministic engine tests pass locally. | Grading needs educator review; voice recognition depends on the browser. |
+| FastAPI / official MCP Python SDK | Backend API and Streamable HTTP learning-tool surface; local automated agent/MCP tests pass. | A live Alexa+ device connection has not been tested. |
+| Strands Agents | Optional agent orchestration integration and runtime imports. | Live model orchestration quality and reliability remain unverified. |
+| Bedrock | Model discovery and Anthropic use-case onboarding attempted. | First-time-use submission rejected with account-not-authorized message; cause unknown. No inference performance claim. |
+| AgentCore Runtime | Configuration, executable entry point, schema/package validation, CDK build, local /ping and demo /invocations. | Hosted deployment and IAM invocation remain unverified. |
+| AgentCore Memory | Optional session-manager code and deployment configuration. | No cloud resource continuity test yet; browser local storage is not AgentCore Memory. |
 
-## Alexa+ / MCP path
+We would continue using the web and Python/MCP stack because it allows independent verification of the learning operations. We would continue evaluating Strands and AgentCore after resolving account access, but cannot yet recommend their live runtime performance based on this project.
 
-### What we used it for
-Nexora exposes adaptive-learning tools through a self-hosted MCP server using Streamable HTTP, and demonstrates the conversational experience through a custom Alexa+ web simulation.
-
-### What worked well
-> Add observations after running MCP Inspector / the final server.
-
-### What needs work
-> Add observed setup errors, missing documentation, compatibility issues or required workarounds.
-
-### Onboarding: zero to hello world
-> Record the actual steps and where time was lost.
-
-### Would we build with it again?
-> Yes/No + evidence-based reason.
-
----
-
-## Strands Agents SDK
-
-### What we used it for
-Agent orchestration and tool calling for syllabus parsing, adaptive planning, answer assessment and mastery updates.
-
-### What worked well
-> Fill after live Bedrock/Strands invocation.
-
-### What needs work
-> Fill from actual errors/workarounds.
-
-### Onboarding
-> Fill from actual setup.
-
-### Would we build with it again?
-> Fill after testing.
-
----
-
-## Amazon Bedrock
-
-### What we used it for
-Model inference behind the cloud-enabled Nexora Strands agent.
-
-### What worked well
-> Fill after live invocation.
-
-### What needs work
-> Fill after live invocation.
-
-### Onboarding
-> Include model-access / IAM / region experience if encountered.
-
-### Would we build with it again?
-> Fill after testing.
-
----
-
-## Amazon Bedrock AgentCore Runtime
-
-### What we used it for
-Production runtime target for the Nexora agent entry point.
-
-### What worked well
-> Fill after deployment/invocation.
-
-### What needs work
-> Fill after deployment/invocation.
-
-### Onboarding
-> Fill after deployment/invocation.
-
-### Would we build with it again?
-> Fill after testing.
-
----
-
-## Amazon Bedrock AgentCore Memory
-
-### What we used it for
-Persistent learner context across sessions using the Strands AgentCore memory session manager.
-
-### What worked well
-> Fill after memory is provisioned and continuity is verified.
-
-### What needs work
-> Fill after testing.
-
-### Onboarding
-> Fill after testing.
-
-### Would we build with it again?
-> Fill after testing.
-
----
-
-## Feedback writing rule
-
-For each section, prefer a specific observation such as:
-
-> “The quick-start omitted X, so setup failed with Y until we did Z.”
-
-instead of vague praise/criticism such as:
-
-> “Documentation was good/bad.”
-
-Copy reproducible problems into `FRICTION_LOG.md` with task, exact steps, expected/actual result, severity, workaround, suggestion and evidence.
+Onboarding progressed from a runnable local web experience to Python tools and an AgentCore-compatible runtime. Local integration errors were corrected. The zero-to-live-Bedrock-response journey remains unfinished. See [FRICTION_LOG.md](FRICTION_LOG.md) for observed steps, errors, workarounds and suggestions.

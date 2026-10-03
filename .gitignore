@@ -229,3 +229,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Frontend source modules are not Python environment libraries.
+!apps/web/src/lib/
+!apps/web/src/lib/**

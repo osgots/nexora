@@ -10,13 +10,27 @@ Unlike a single-turn study chatbot, Nexora is designed around a closed loop:
 
 **understand → prioritize → teach → test → remember → replan**
 
-## Why it is different
+## Current working experience
 
-- **Alexa+ ready:** a real self-hosted MCP server over Streamable HTTP plus a polished simulated Alexa+ web experience.
-- **AWS-native agent:** Strands Agents on Amazon Bedrock, with an AgentCore Runtime entry point.
-- **Persistent memory:** optional AgentCore Memory integration keeps learner/session state across conversations.
-- **Tool-driven decisions:** syllabus parsing, plan generation, answer grading and mastery updates are exposed as agent tools and MCP tools.
-- **Demo resilient:** deterministic local planning keeps the experience usable when AWS credentials are intentionally absent.
+The live site is an **Alexa+ web simulation**, with a deterministic learning engine and browser-local progress. It is not a published Alexa skill or a live Alexa+ integration.
+
+- **Command:** targeted quiz, transparent feedback, and a plan that adapts to mastery and available minutes.
+- **Learning:** four Computer Architecture lessons with worked ideas.
+- **Memory:** retained attempts, JSON export, and a confirmed demo reset.
+- **Insights:** changes against the sample baseline and an explanation of scoring.
+- **Reusable tools:** a separate Python MCP toolkit in `opensource/adaptive-learning-mcp`.
+- **Optional cloud path:** Strands, Bedrock, and AgentCore code is included. Live inference and cloud-memory continuity remain unverified; the deployed frontend does not require AWS credentials.
+
+Scores are illustrative. Keyword coverage is not semantic grading or a validated estimate of ability. The latest 100 attempts and mastery scores are saved locally; conversation text and answers are not persisted.
+
+## Judge quick start
+
+1. Open the live demo. For a fresh state, use **Memory → Reset demo progress → Confirm reset**.
+2. Open **Learning**, read the Booth lesson, and choose its practice button.
+3. Answer: “It detects transitions between runs of bits and selects add or subtract operations.”
+4. Observe Booth 52% → 63%, average 68% → 71%, and Cache mapping becoming the next priority.
+5. Type “Plan 60 minutes”; the plan allocates 25, 20, and 15 minutes.
+6. Open **Memory**, reload, and inspect the retained attempt. Open **Insights** to inspect the score changes.
 
 ## Architecture
 
@@ -44,8 +58,10 @@ docs/                     Architecture, Devpost, demo and friction log
 
 ## Run the web experience
 
+Use Node.js 24+ for the build and the dependency-free TypeScript engine tests.
+
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -107,6 +123,10 @@ post-deployment memory-ID step.
 
 ## Tests
 
+Web: `npm test` and `npm run build`.
+
+Agent:
+
 ```bash
 cd services/agent
 pytest
@@ -117,7 +137,7 @@ The core study engine is deterministic and separately testable from cloud servic
 ## Hackathon tracks
 
 - **Primary:** Alexa+
-- **Mini challenge:** AWS Builder
+- **AWS Builder:** not entered in the current draft; live AWS verification pending
 - **Mini challenge:** Open Source
 
 This repository is public and MIT licensed, and all hackathon work is captured in commit history.
@@ -126,7 +146,7 @@ This repository is public and MIT licensed, and all hackathon work is captured i
 
 - [`docs/DEVPOST.md`](docs/DEVPOST.md) — submission copy
 - [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md) — <3 minute demo script
-- [`docs/FRICTION_LOG.md`](docs/FRICTION_LOG.md) — bonus-ready friction log template
+- [`docs/FRICTION_LOG.md`](docs/FRICTION_LOG.md) — observed setup friction and workarounds
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — technical architecture
 - [`docs/DEPLOYMENT_EVIDENCE.md`](docs/DEPLOYMENT_EVIDENCE.md) — verified deployment and test evidence
 - [`docs/AWS_GITHUB_OIDC.md`](docs/AWS_GITHUB_OIDC.md) — keyless AgentCore deployment setup

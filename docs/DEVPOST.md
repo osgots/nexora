@@ -1,73 +1,44 @@
-# Devpost Submission Draft
-
-## Name
-**Nexora**
-
-## Tagline
-**Adaptive intelligence for how you learn.**
+# Nexora — submission copy
 
 ## Inspiration
-Most AI study tools wait for a question and return an answer. Real learning is different: a student has limited time, uneven mastery, changing confidence and an exam deadline. We wanted an assistant that does not merely answer — it decides what the learner should do next, remembers the result, and changes the plan.
+Students often know which exam is coming but struggle to decide what to study next. Nexora turns that uncertainty into a visible loop: choose a weak topic, learn the concept, practise it, inspect feedback, retain the result, and adapt the next action.
 
 ## What it does
-Nexora is an agentic adaptive learning system designed for Alexa+. A learner can say or type a goal such as, “My exam is Friday and I have 90 minutes tonight.” Nexora uses available time and retained mastery to prioritize the next learning action. It can run active-recall questions, grade concept coverage, update mastery and automatically re-rank the remaining study plan.
+Nexora is a simulated Alexa+ web experience for Computer Architecture study. Four working sections connect the loop:
 
-The web product is explicitly a **simulated Alexa+ multimodal experience** with conversational responses, adaptive cards, a live study plan, a mastery view and browser voice input where supported. A quiz answer visibly changes the learner state and can change the next recommended action. Nexora also includes a self-hosted MCP server over Streamable HTTP so the same learning operations can be exposed as MCP tools.
+- **Command:** typed study commands, targeted recall questions, feedback, and an adaptive plan.
+- **Learning:** four focused lessons with explanations and worked ideas.
+- **Memory:** the latest 100 local attempts, scores, mastery changes, JSON export, and a confirmed demo reset.
+- **Insights:** topic changes against the sample baseline and an explanation of the scoring and ranking rules.
+
+Choose a study budget between 15 and 180 minutes or type “Plan 60 minutes.” Complete the weakest-topic quiz to update mastery and reorder the plan. A correct Booth answer moves its demo score from 52% to 63%, changing the next priority to Cache mapping. Reload the same browser to see retained progress.
+
+Starting scores are illustrative. Grading checks keyword groups, can miss paraphrases or accept incorrect sentences containing the right terms, and is not a validated assessment of ability or exam readiness. Voice input fills the composer for review where supported. The demo does not require an AWS account or paid model access.
 
 ## How we built it
-- React + TypeScript for the simulated Alexa+ experience
-- official MCP Python SDK for the Streamable HTTP MCP server
-- Strands Agents for agent/tool orchestration
-- Amazon Bedrock model path for cloud inference
-- Amazon Bedrock AgentCore Memory integration using the Strands session manager when a memory resource ID is configured
-- AgentCore Runtime entry point for cloud deployment
-- FastAPI for the simulator API
-- deterministic learning engine for testability and demo resilience
-- GitHub Actions for production web builds, agent tests and runtime import smoke tests
+React, TypeScript, and Vite power the frontend on Vercel. A deterministic TypeScript learning engine owns the browser demonstration. Python/FastAPI and the official MCP Python SDK provide separate backend and Streamable HTTP MCP surfaces. The standalone Adaptive Learning MCP package exposes reusable learning operations with independent tests.
 
-## The agentic loop
-**understand → prioritize → teach → test → remember → replan**
-
-This loop is the key difference from a generic tutor chatbot. Every answer can change the next action. The simulator also exposes its latest orchestration trace so the state transition is visible rather than hidden behind model prose.
+Optional Strands, Bedrock, AgentCore Runtime, and AgentCore Memory integration paths are in the repository. They are not deployed-cloud claims: the live web demo uses local state, and live inference and cloud memory continuity remain unverified. The Anthropic first-time-use request was rejected by AWS account authorization; that observed friction is documented separately.
 
 ## Challenges
-The main design challenge was separating “AI conversation” from “learning state.” We did not want model prose to be the source of truth for mastery. Nexora therefore keeps scoring/planning logic in deterministic tools that the agent can call. We also designed a cloud-safe fallback so reviewers can inspect the product without private AWS credentials.
-
-A second challenge was keeping claims reproducible. The repository separates code-complete integrations from live-cloud evidence: Bedrock and AgentCore paths are implemented, while the submission checklist explicitly requires a real AWS invocation and memory-continuity capture before we describe those behaviors as verified in the final entry.
+Keeping scores, conversation, history, and plans consistent mattered more than adding more dashboard statistics. We replaced static metrics and inactive navigation, added validated local storage and inspectable history, and made time allocation follow the actual selected budget. Cloud onboarding remained blocked, so the explicitly labelled simulation keeps the product reviewable.
 
 ## Accomplishments
-- self-hosted MCP tool surface and simulated Alexa+ experience in one project
-- AWS-oriented Strands/Bedrock/AgentCore architecture with explicit integration code
-- persistent browser mastery in the simulator plus an AgentCore Memory integration hook for the cloud path
-- deterministic, independently testable study engine
-- quiz → grade → mastery update → automatic re-ranking visible in the UI
-- responsive multimodal dashboard
-- graceful local demo mode
-- green CI for the web production build and Python agent tests
-
-## Open Source mini-challenge
-Alongside Nexora, we created and merged **Adaptive Learning MCP**, a standalone reusable toolkit for other learning-agent developers.
-
-- **Merged contribution:** https://github.com/osgots/nexora/pull/1
-- **Project repository:** https://github.com/osgots/nexora
-- **GitHub username:** `osgots`
-- **Package path:** `opensource/adaptive-learning-mcp`
-
-Adaptive Learning MCP exposes deterministic topic prioritization, active-recall grading and mastery updates through a Streamable HTTP MCP server. It includes standalone package metadata, tests and a documented agent-loop integration pattern. The goal is to let other learning-agent developers keep learner-state decisions testable instead of burying them inside prompts.
+A deployed interactive learn–quiz–feedback–replan loop; functional Learning, Memory, and Insights views; local persistence and export; transparent grading; a reusable open-source MCP toolkit; automated tests for state validation, time allocation, and state transitions; and locally validated AgentCore runtime packaging.
 
 ## What we learned
-Agentic UX becomes much more convincing when the model is not asked to do everything. Explicit tools for planning, grading and mastery updates make decisions easier to test and explain. Persistent state also changes the product from a question-answering surface into a continuing learning loop.
+Learning state should be explicit and independently testable. Showing the reasoning behind a changed priority is more useful than a confidence score with no explanation. A deterministic simulation makes the workflow inspectable while the cloud path is being verified.
 
 ## What's next
-- document ingestion from learner-owned files
-- spaced-repetition scheduling using longer-term mastery histories
-- account-linked user profiles
-- educator/mentor dashboards
-- multilingual voice study sessions
+Educator-reviewed assessment, broader course material, spaced repetition, account-linked persistence, and verified cloud model/runtime/memory integration. This is a web simulation, not a published Alexa skill or a live Alexa+ device integration.
 
-## Tracks
-**Primary:** Alexa+  
-**Mini challenges:** AWS Builder, Open Source
+## Built with
+React, TypeScript, Vite, Python, FastAPI, MCP, Vercel. Optional cloud integration code: Strands Agents, Amazon Bedrock, Amazon Bedrock AgentCore.
 
-## Product Feedback checklist
-Before final submission, replace the placeholders in `docs/PRODUCT_FEEDBACK.md` with specific observations from every Amazon SDK/service actually exercised. Copy reproducible problems into `docs/FRICTION_LOG.md`; do not invent feedback, performance numbers or deployment claims.
+## Links and tracks
+- Demo: https://nexora-eta-ten.vercel.app/
+- Code: https://github.com/osgots/nexora
+- Primary: Alexa+ simulation
+- Open Source mini challenge: https://github.com/osgots/nexora/pull/1
+- Additional toolkit: opensource/adaptive-learning-mcp; GitHub username osgots
+- AWS Builder: not entered in the current draft; live cloud integration remains unverified.
