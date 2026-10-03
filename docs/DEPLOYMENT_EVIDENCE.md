@@ -51,3 +51,15 @@ October 1 checkpoint: AWS Console still returns "Site Unavailable" in the cloud 
 6. Public GitHub commit and successful Actions run.
 
 Do not replace a pending item with a claim until the corresponding deployment or test has actually succeeded.
+
+## October 3 working-simulation verification
+
+- Production commit e779edd9207d1cc1ec0844deca8632f9f84d5d97 deployed READY on Vercel.
+- Six frontend engine tests and twelve Python agent/MCP toolkit tests pass locally; web production build passes.
+- Browser verified Learning navigation, Booth lesson → quiz → feedback, score 52→63, average 68→71, and Cache becoming next priority.
+- Browser verified “Plan 60 minutes” allocates 25/20/15 minutes and persists across reload.
+- Browser verified Memory retains the same attempt after reload and Insights shows +11 points against the sample baseline.
+- Export control exercised; automated download-event confirmation timed out in the cloud browser. File-delivery verification remains limited.
+- Responsive CSS includes mobile navigation; no physical mobile-device verification is claimed.
+- Browser logs observed extension metadata errors; no app-origin error was observed in the captured error sample.
+- No live Bedrock/AgentCore verification is claimed.
